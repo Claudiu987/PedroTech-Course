@@ -2,32 +2,36 @@ import "./App.css";
 import { useState } from "react";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [todoList, setTodoList] = useState([]);
+  const [newTask, setNewTask] = useState("");
 
+  const HandleChange = (event) => {
+    setNewTask(event.target.value);
+  };
+
+  const addTask = () => {
+    setTodoList([...todoList, newTask]);
+  };
+
+  const deleteTask = (taskName) => {
+    setTodoList(todoList.filter((task) => task !== taskName));
+  };
   return (
     <div className="App">
-      <button
-        onClick={() => {
-          setCount(count + 1);
-        }}
-      >
-        Increase
-      </button>
-      <button
-        onClick={() => {
-          setCount(count - 1);
-        }}
-      >
-        Decrease
-      </button>
-      <button
-        onClick={() => {
-          setCount(0);
-        }}
-      >
-        Set to 0
-      </button>
-      {count}
+      <div className="addTask">
+        <input onChange={HandleChange} />
+        <button onClick={addTask}> Add Task</button>
+      </div>
+      <div className="list">
+        {todoList.map((task) => {
+          return (
+            <div>
+              <h1>{task}</h1>
+              <button onClick={() => deleteTask(task)}>x</button>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }
