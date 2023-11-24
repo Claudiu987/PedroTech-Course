@@ -9,10 +9,23 @@ function App() {
     setNewTask(event.target.value);
   };
 
+  const changeColor = (id) => {
+    setTodoList(
+      todoList.map((task) => {
+        if (task.id === id) {
+          return { ...task, completed: true };
+        } else {
+          return task;
+        }
+      })
+    );
+  };
+
   const addTask = () => {
     const task = {
       id: todoList.length === 0 ? 1 : todoList[todoList.length - 1].id + 1,
       taskName: newTask,
+      completed: false,
     };
     setTodoList([...todoList, task]);
   };
@@ -29,9 +42,10 @@ function App() {
       <div className="list">
         {todoList.map((task) => {
           return (
-            <div>
+            <div style={{ color: task.completed ? "green" : "black" }}>
               <h1>{task.taskName}</h1>
               <button onClick={() => deleteTask(task.id)}>x</button>
+              <button onClick={() => changeColor(task.id)}>Complete</button>
             </div>
           );
         })}
