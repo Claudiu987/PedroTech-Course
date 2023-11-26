@@ -1,10 +1,12 @@
 import "./App.css";
-import Form from "./pages/Form";
+import { useToggle } from "./components/useToggle";
 
 function App() {
+  const [isVisible, toggle] = useToggle();
   return (
     <div className="App">
-      <Form />
+      <button onClick={toggle}>{isVisible ? "Hide" : "Show"}</button>
+      {isVisible && <h1>Hidden text</h1>}
     </div>
   );
 }
